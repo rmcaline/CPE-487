@@ -1,4 +1,3 @@
----will upload file soon
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -54,7 +53,7 @@ begin
     video_memory : VideoMemory port map( display => display, pixel_x => pixel_x, pixel_y => pixel_y, refresh => temp, red => red, green => green, blue => blue, sw => sw, input => temp1);
     keyboard_driver : ps2_keyboard port map( clk => clk, PS2Clk => PS2Clk, PS2Data => PS2Data, ps2_code => temp1);
 end Behavioral;
-##Buttons
+##Buttons --for onboard buttons 
 
 
 
