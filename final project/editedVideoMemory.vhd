@@ -10,6 +10,8 @@ entity VideoMemory is
          red, green, blue : out std_logic_vector( 3 downto 0);
          sw : in STD_LOGIC_VECTOR (11 downto 0);
          input : in STD_LOGIC_VECTOR (7 downto 0));
+         BTNL,BTNR, FIRE: in std_logic;
+         PAUSE, CONT, REST: in std_logic;
 end VideoMemory;
 
 architecture Behavioral of VideoMemory is
@@ -1708,14 +1710,14 @@ begin
                    end loop;
                end if;
                
-               --keyboard && spaceship movement
-               if ( input = x"1C" and min_x < spaceship_location_x - ship_speed - 1 ) then --1C 'A' button
+               --keyboard && spaceship movement SWITCHED TO BUTTONS ON BOARD
+               if ( BTNL = '1' and min_x < spaceship_location_x - ship_speed - 1 ) then --1C 'A' button
                    spaceship_location_x <= spaceship_location_x - ship_speed;
                end if;
-               if ( input = x"23" and spaceship_location_x + spaceship_width_x + ship_speed + 1 < max_x ) then --23 'D' button
+               if ( BTNR = '1' and spaceship_location_x + spaceship_width_x + ship_speed + 1 < max_x ) then --23 'D' button
                    spaceship_location_x <= spaceship_location_x + ship_speed;
                end if;  
-               if ( input = x"29" and generated = '0' ) then --29 'Space' button
+               if (  FIRE = '1' and generated = '0' ) then --29 'Space' button SWITCHED TO BOTTOM BUTTON
                    fire_set_visible <= '1';
                    box_location_x <= (spaceship_location_x + spaceship_width_x/2) - (box_width / 2);
                    box_location_y <= (spaceship_location_y + spaceship_width_y/2) - (box_width / 2);
@@ -1724,15 +1726,15 @@ begin
                    fire_set_visible <= '0';
                    generated <= '0';
                end if; 
-               if ( input = x"4D" and paused = '0') then --P pause
+               if ( PAUSE = '1' and paused = '0') then --P pause SWITCHED TO SWITCH 1
                     paused <= '1';
                end if; 
            end if;
        end if; 
-       if ( input = x"21" and paused = '1') then --c continue
+       if ( CONT = '1' and paused = '1') then --c continue
                paused <= '0';
         end if;
-       if ( input = x"2D" and paused = '1' ) then --r restart
+       if ( REST = '1' and paused = '1' ) then --r restart
               reset <= '1';
               paused <= '0';
        end if;
